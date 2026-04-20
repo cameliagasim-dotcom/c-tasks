@@ -1,0 +1,72 @@
+using System;
+
+{
+    public static void Main(string[] args)
+    {
+        class product
+        {
+            private string ad;
+            private string kateqoriya;
+            private DateTime sonistifadetarixi;
+            public string GetAd() { return ad; }
+            public void SetAd(string a) { ad = a; }
+            public string GetKateqoriya() { return kateqoriya; }
+            public void SetKateqoriya(string k) { category = k; }
+            public DateTime GetSonistifadetarixi() { return sonistifadetarixi; }
+            public void SetSonistifadetarixi(DateTime d) { expireDate = d; }
+            public void GetData()
+            {
+                Console.WriteLine("Ad: " + ad);
+                Console.WriteLine("Kateqoriya: " + kateqoriya);
+                Console.WriteLine("Son istifadə tarixi: " + sonistifadetarixi.ToShortDateString());
+                Console.WriteLine("----------------------");
+            }
+            public bool VaxtiKecibmi()
+            {
+                return DateTime.Now > sonistifadetarixi;
+            }
+        }
+
+        class program
+        {
+            static void Main()
+            {
+                List<product> products = new List<product>();
+                Product p1 = new Product();
+                p1.SetAd("Süd");
+                p1.SetKateqoriya("Qida");
+                p1.SetSonistifadetarixi(new DateTime(2023, 8, 6));
+                product p2 = new product();
+                p2.SetAd("Çörək");
+                p2.SetKateqoriya("Qida");
+                p2.SetSonistifadetarixi(new DateTime(2026, 5, 9));
+                Product p3 = new product();
+                p3.SetAd("Şampun");
+                p3.SetKateqoriya("Kosmetika");
+                p3.SetSonistifadetarixi(new DateTime(2027, 1, 3));
+                products.Add(p1);
+                products.Add(p2);
+                products.Add(p3);
+                Console.WriteLine("Bütün məhsullar:");
+                foreach (var p in products)
+                {
+                    p.GetData();
+                }
+                Console.WriteLine("p1 listdə var? " + products.Contains(p1));
+                Console.WriteLine("\nQida məhsulları:");
+                var filtered = products.Where(p => p.GetKateqoriya() == "Qida");
+                foreach (var p in filtered)
+                {
+                    p.GetData();
+                } 
+                products.RemoveAll(p => p.VaxtiKecmis());
+
+               Console.WriteLine("\nVaxtı keçmişlər silindikdən sonra:");
+               foreach (var p in products)
+               {
+                  p.GetData();
+               }
+            }
+        }
+    }
+}
