@@ -1,0 +1,94 @@
+using System;
+
+{
+    public static void Main(string[] args)
+    {
+        class Product
+    {
+    protected string name;
+    protected string category;
+    protected DateTime expireDate;
+
+    public void SetName(string n) { name = n; }
+    public void SetCategory(string c) { category = c; }
+    public void SetExpireDate(DateTime d) { expireDate = d; }
+
+    public string GetCategory() { return category; })
+    public virtual void GetData()
+    {
+        Console.WriteLine("Ad: " + name);
+        Console.WriteLine("Kateqoriya: " + category);
+        Console.WriteLine("Son istifadə tarixi: " + expireDate.ToShortDateString());
+    }
+
+    public bool IsExpired()
+    {
+        return DateTime.Now > expireDate;
+    }
+}
+class FoodProduct : Product
+{
+    public override void GetData()
+    {
+        Console.WriteLine("Qida Məhsulu");
+        base.GetData();
+        Console.WriteLine("----------------------");
+    }
+}class CosmeticProduct : Product
+{
+    public override void GetData()
+    {
+        Console.WriteLine("Kosmetik Məhsul");
+        base.GetData();
+        Console.WriteLine("----------------------");
+    }
+}
+class Program
+{
+    static void Main()
+    {
+        List<Product> products = new List<Product>();
+
+        FoodProduct p1 = new FoodProduct();
+        p1.SetName("Süd");
+        p1.SetCategory("Qida");
+        p1.SetExpireDate(new DateTime(2024, 5, 1));
+
+        FoodProduct p2 = new FoodProduct();
+        p2.SetName("Çörək");
+        p2.SetCategory("Qida");
+        p2.SetExpireDate(new DateTime(2026, 1, 1));
+
+        CosmeticProduct p3 = new CosmeticProduct();
+        p3.SetName("Şampun");
+        p3.SetCategory("Kosmetika");
+        p3.SetExpireDate(new DateTime(2027, 1, 1));
+
+        products.Add(p1);
+        products.Add(p2);
+        products.Add(p3);
+        Console.WriteLine("Bütün məhsullar:");
+        foreach (var p in products)
+        {
+            p.GetData();
+        }
+
+        Console.WriteLine("\nQida məhsulları:");
+        var filtered = products.Where(p => p.GetCategory() == "Qida");
+
+        foreach (var p in filtered)
+        {
+            p.GetData();
+        }
+
+        // Expired sil
+        products.RemoveAll(p => p.IsExpired());
+
+        Console.WriteLine("\nVaxtı keçmişlər silindikdən sonra:");
+        foreach (var p in products)
+        {
+            p.GetData();
+        }
+
+    }
+}
