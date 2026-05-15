@@ -1,0 +1,115 @@
+using  System;
+
+
+    class Person
+    {
+        public string Name{get;set;}
+        public string Surname{get;set;}
+        public Person(string name , string surname)
+        {
+            Name = name;
+            Surname = surname;
+        }
+        public virtual void ShowInfo()
+        {
+            Console.WriteLine($"Ad:{Name} Soyad:{Surname}");
+        }
+        
+    }
+    class Student: Person
+    {
+        public int Id {get;set;}
+        public double GPA {get;set;}
+        public Student(int id, string name,string surname , double gpa) : base(name,surname)
+        {
+            Id = id;
+            GPA = gpa;
+        }
+        public override void ShowInfo()
+        {
+            Console.WriteLine($"ID: {Id}");
+            Console.WriteLine($"Ad: {Name}");
+            Console.Writeline($"Soyad: {Surname}");
+            Console.WriteLine($"Ortalama: :{GPA}");
+        }
+    }
+    class Scholarship
+    {
+        public string ScholarshipName {get;set;}
+        public double Amount {get;set;}
+        public Scholarship(string scholarshipname, double amount)
+        {
+            ScholarshipName = scholarshipname;
+            Amount = amount;
+        }
+        public void ShowScholarship()
+        {
+            Console.WriteLine($"Teqaud: {ScholarshipName}");
+            Console.WriteLine($"Mebleg: {Amount} AZN");
+        }
+    }
+    class University
+    { 
+        List<Student> students = new List<Student>();
+        public void AddStudent(Student student)
+        {
+            students.Add(student);
+            Console.WriteLine("Telebe elave edildi.");        
+        }
+        public void ShowAllStudents()
+        {
+            foreach(var student in students)
+            { 
+                student.ShowInfo();
+                Console.WriteLine("------------");
+            }
+        }
+        public void CheckScholarship()
+        { 
+            foreach ( var student in students)
+            { 
+                
+                if(student.GPA<101)
+                {
+                    if (student.GPA>=91)
+                    {
+                        Console.WriteLine($"{student.Name} Elaci teqaudu qazandi.");
+                    }
+                    else if (student.GPA>=71)
+                    {
+                        Console.WriteLine($"{student.Name} Zerbeci (heveslendirici) teqaudu qazandi.");
+                    }
+                    else if (student.GPA>=51)
+                    {
+                        Console.WriteLine($"{student.Name} Adi teqaud qazandi.");
+                    }
+                    else 
+                    {
+                        Console.WriteLine($"{student.Name} teqaud qazanmadi.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Bal duzgun daxil olunmayib!");
+                }
+            }
+        }
+        
+        
+    }
+    class  Program 
+    {
+        static void Main(string[] args)
+        {
+            University university = new University ();
+            Student s1 = new Student(1,"Cemile", "Qasimzade",80);
+            Student s2= new Student(2,"Leyla","Memmedova",74);
+            university.AddStudent(s1);
+            university.AddStudents(s2);
+            Console.WriteLine("\nTelebeler:");
+            university.ShowAllStudents();
+            Console.WriteLine("\nTeqaud neticeleri:");
+            university.CheckScholarship();
+        }
+    }
+         
